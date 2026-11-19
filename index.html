@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krusah English P.6 Hub | คลังสื่อการสอนภาษาอังกฤษ ป.6 (ครูสา)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Mali:wght@500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Rainbow Top Ribbon -->
+  <div class="rainbow-ribbon" aria-hidden="true"></div>
+
+  <!-- Playful Cartoon Background Elements -->
+  <div class="bg-decor" aria-hidden="true">
+    <span class="cloud cloud-1"></span>
+    <span class="cloud cloud-2"></span>
+    <span class="cloud cloud-3"></span>
+    <span class="float-star star-1">★</span>
+    <span class="float-star star-2">✦</span>
+    <span class="float-star star-3">★</span>
+    <span class="float-star star-4">✦</span>
+  </div>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="container nav-inner">
+      <div class="brand" id="brandHome" role="button" tabindex="0" title="กลับหน้าแรก">
+        <div class="brand-avatar" aria-hidden="true">
+          <img src="assets/hero-mascot.jpg" alt="English P.6 Mascot">
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Krusah English <span class="accent-badge">P.6</span> Hub</span>
+          <span class="brand-sub">คลังสื่อการสอนภาษาอังกฤษ ป.6 โดยครูสา (Krusah)</span>
+        </div>
+      </div>
+
+      <div class="nav-search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M20 20l-3.5-3.5" stroke-linecap="round"/>
+        </svg>
+        <input type="search" id="searchInput" placeholder="ค้นหาใบงาน คำศัพท์ สไลด์ หรือแบบทดสอบ..." aria-label="ค้นหาสื่อการสอน">
+        <button type="button" id="clearSearchBtn" class="clear-search hidden" aria-label="ล้างคำค้นหา">&times;</button>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" id="navReadingBtn" class="btn btn-coral" title="เมนูฝึกอ่านจับใจความภาษาอังกฤษ พร้อมเนื้อเรื่องสั้นและคำถาม 5 ข้อ">
+          <span aria-hidden="true">📖</span>
+          <span class="hide-sm">อ่านจับใจความ</span>
+        </button>
+
+        <button type="button" id="navReaderBtn" class="btn btn-mint" title="ฝึกอ่านออกเสียงประโยคภาษาอังกฤษแบบ Interactive (ขยายคำทีละคำ)">
+          <span aria-hidden="true">🗣️</span>
+          <span class="hide-sm">ฝึกอ่านประโยค</span>
+        </button>
+
+        <button type="button" id="bookmarkFilterBtn" class="btn btn-star-nav" title="ดูสื่อที่บันทึกไว้">
+          <span aria-hidden="true">⭐</span>
+          <span class="hide-sm">ที่บันทึกไว้</span>
+          <span class="count-pill" id="bookmarkCount">0</span>
+        </button>
+
+        <button type="button" id="teacherModeBtn" class="btn btn-teacher" aria-pressed="false">
+          <span aria-hidden="true">👩‍🏫</span>
+          <span id="teacherModeLabel">โหมดครู</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Teacher Management Toolbar (Visible when Teacher Mode is ON) -->
+  <section id="teacherBar" class="teacher-bar hidden" aria-label="แถบเครื่องมือสำหรับครู">
+    <div class="container teacher-bar-inner">
+      <div class="teacher-bar-status">
+        <span class="pulse-dot"></span>
+        <div>
+          <strong>🎨 โหมดครูเปิดใช้งานอยู่</strong>
+          <span class="teacher-bar-hint">เพิ่ม แก้ไข ลบสื่อ แนบไฟล์ PDF/รูปภาพ หรือสำรองข้อมูลได้ทันที</span>
+        </div>
+      </div>
+      <div class="teacher-bar-actions">
+        <button type="button" id="addMaterialBtn" class="btn btn-mint btn-sm">
+          ➕ เพิ่มสื่อใหม่
+        </button>
+        <button type="button" id="manageUnitsBtn" class="btn btn-soft btn-sm">
+          📚 จัดการหน่วยฯ
+        </button>
+        <button type="button" id="exportDataBtn" class="btn btn-soft btn-sm" title="ดาวน์โหลดไฟล์สำรองข้อมูล (.json)">
+          💾 สำรองข้อมูล
+        </button>
+        <button type="button" id="importDataBtn" class="btn btn-soft btn-sm" title="นำเข้าข้อมูลจากไฟล์สำรอง (.json)">
+          📂 นำเข้า
+        </button>
+        <input type="file" id="importFileInput" accept=".json,application/json" class="hidden">
+        <button type="button" id="teacherSettingsBtn" class="btn btn-soft btn-sm" title="ตั้งค่ารหัสผ่านโหมดครูและรีเซ็ตข้อมูล">
+          ⚙️ ตั้งค่า
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="container main-content">
+    <!-- Hero Banner (Big Cute Cartoon Showcase) -->
+    <section class="hero-card">
+      <div class="hero-left">
+        <div class="hero-pill">
+          <span>🌈</span>
+          สื่อการสอนภาษาอังกฤษ ป.6 โดย Krusah (ครูสา)
+        </div>
+        <h1 class="hero-title">เรียนภาษาอังกฤษ<br><span>สนุก สดใส ครบทุกสื่อ!</span></h1>
+        <p class="hero-desc">
+          รวมใบงานพิมพ์ A4 สไลด์และวิดีโอการสอน บัตรคำศัพท์พร้อมเสียงอ่าน เกมจับคู่แสนสนุก และแบบทดสอบติวเข้ม O-NET ป.6
+        </p>
+        <div class="hero-quick-actions">
+          <button type="button" id="quickReadingBtn" class="btn btn-coral">
+            📖 อ่านจับใจความ (5 ข้อ)
+          </button>
+          <button type="button" id="quickReaderBtn" class="btn btn-mint">
+            🗣️ ฝึกอ่านออกเสียงประโยค
+          </button>
+          <button type="button" id="quickFlashcardBtn" class="btn btn-sunny">
+            🃏 ฝึกคำศัพท์พร้อมเสียง
+          </button>
+          <button type="button" id="quickQuizBtn" class="btn btn-pink">
+            🏆 ลุยแบบทดสอบ O-NET
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-art-col">
+        <button type="button" id="heroSpeechBtn" class="speech-bubble" title="คลิกเพื่อฟังเสียงทักทายภาษาอังกฤษ!">
+          🔊 Hello P.6! Let's learn! ✨
+        </button>
+        <div class="hero-illustration-frame">
+          <button type="button" id="heroMascotBtn" class="hero-mascot-btn" title="คลิกคุณครูนกฮูกเพื่อฟังประโยคให้กำลังใจภาษาอังกฤษ">
+            <img src="assets/hero-mascot.jpg" alt="คุณครูนกฮูกและนักเรียน ป.6 เรียนภาษาอังกฤษอย่างสนุกสนาน" class="hero-illustration">
+          </button>
+          <button type="button" id="stickerAbcBtn" class="sticker-float sticker-a" title="คลิกเพื่อสุ่มฝึกบัตรคำศัพท์ภาษาอังกฤษ">ABC</button>
+          <button type="button" id="stickerStarBtn" class="sticker-float sticker-b" title="คลิกเพื่อดูสื่อที่บันทึกไว้ (รายการโปรด)">⭐</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Colorful Cartoon Stats Row (All Clickable!) -->
+    <section class="stats-row" id="heroStats" aria-label="สถิติสื่อการสอน">
+      <button type="button" class="stat-card stat-sky" data-stat-filter="all" title="คลิกเพื่อดูสื่อการสอนทั้งหมด">
+        <div class="stat-badge-icon">📚</div>
+        <div>
+          <div class="stat-num" id="statTotal">0</div>
+          <div class="stat-label">สื่อทั้งหมด ➔</div>
+        </div>
+      </button>
+      <button type="button" class="stat-card stat-mint" data-stat-filter="worksheet" title="คลิกเพื่อดูเฉพาะใบงานและแบบฝึกหัด">
+        <div class="stat-badge-icon">📝</div>
+        <div>
+          <div class="stat-num" id="statWorksheets">0</div>
+          <div class="stat-label">ใบงาน / แบบฝึกหัด ➔</div>
+        </div>
+      </button>
+      <button type="button" class="stat-card stat-sunny" data-stat-filter="flashcard" title="คลิกเพื่อดูชุดบัตรคำศัพท์และเกมจับคู่">
+        <div class="stat-badge-icon">🃏</div>
+        <div>
+          <div class="stat-num" id="statVocab">0</div>
+          <div class="stat-label">คำศัพท์พร้อมเสียง ➔</div>
+        </div>
+      </button>
+      <button type="button" class="stat-card stat-pink" data-stat-filter="quiz" title="คลิกเพื่อดูแบบทดสอบออนไลน์ทั้งหมด">
+        <div class="stat-badge-icon">🏆</div>
+        <div>
+          <div class="stat-num" id="statQuizzes">0</div>
+          <div class="stat-label">ข้อสอบออนไลน์ ➔</div>
+        </div>
+      </button>
+    </section>
+
+    <!-- Units Selector (Big Illustrated Cartoon Cards) -->
+    <section class="section-block" id="unitsSection" aria-label="หน่วยการเรียนรู้">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🌈 เลือกหน่วยการเรียนรู้ (Learning Units)</h2>
+          <p class="section-subtitle">คลิกภาพหน่วยการเรียนรู้เพื่อเปิดดูสื่อของหน่วยนั้นทันที</p>
+        </div>
+        <button type="button" class="unit-badge-info" id="activeUnitInfo" title="คลิกเพื่อเลื่อนลงไปดูรายการสื่อด้านล่าง">แสดงทุกหน่วยการเรียนรู้ ⬇️</button>
+      </div>
+      <div class="units-grid" id="unitsContainer"></div>
+    </section>
+
+    <!-- Active Materials Anchor & Banner -->
+    <section class="materials-banner" id="materialsAnchor" aria-label="หัวข้อรายการสื่อที่กำลังแสดง">
+      <div class="materials-banner-left">
+        <img src="assets/hero-mascot.jpg" alt="หน่วยที่เลือก" id="bannerUnitImg" class="banner-unit-img">
+        <div>
+          <div class="banner-kicker" id="bannerKicker">📚 คลังสื่อการสอนทั้งหมด</div>
+          <h2 class="banner-title" id="bannerTitle">สื่อการสอนภาษาอังกฤษ ป.6 (ทุกหน่วยการเรียนรู้)</h2>
+        </div>
+      </div>
+      <div class="materials-banner-actions">
+        <button type="button" id="bannerShowAllBtn" class="btn btn-sunny btn-sm hidden">🔄 แสดงทุกหน่วย</button>
+        <button type="button" id="bannerBackUnitsBtn" class="btn btn-soft btn-sm">⬆️ เลือกหน่วยอื่น</button>
+      </div>
+    </section>
+
+    <!-- Type Filter & Sort Bar -->
+    <section class="filter-bar" aria-label="ตัวกรองประเภทสื่อ">
+      <div class="type-chips" id="typeChips">
+        <button type="button" class="chip active" data-type="all">
+          <span class="chip-emoji">🌟</span> ทั้งหมด <span class="chip-count" id="countAll">0</span>
+        </button>
+        <button type="button" class="chip" data-type="worksheet">
+          <span class="chip-emoji">📝</span> ใบงาน / แบบฝึกหัด <span class="chip-count" id="countWorksheet">0</span>
+        </button>
+        <button type="button" class="chip" data-type="media">
+          <span class="chip-emoji">🎬</span> วิดีโอ / สไลด์ <span class="chip-count" id="countMedia">0</span>
+        </button>
+        <button type="button" class="chip" data-type="flashcard">
+          <span class="chip-emoji">🃏</span> บัตรคำศัพท์ &amp; เกม <span class="chip-count" id="countFlashcard">0</span>
+        </button>
+        <button type="button" class="chip" data-type="quiz">
+          <span class="chip-emoji">🎯</span> แบบทดสอบออนไลน์ <span class="chip-count" id="countQuiz">0</span>
+        </button>
+      </div>
+
+      <div class="filter-right">
+        <label for="sortSelect" class="sr-only">เรียงลำดับ</label>
+        <select id="sortSelect" class="sort-select">
+          <option value="unit">เรียงตามหน่วยการเรียนรู้</option>
+          <option value="newest">เพิ่มล่าสุดก่อน</option>
+          <option value="title">เรียงตามชื่อ ก-ฮ / A-Z</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Materials Grid (Large Illustrated Cards) -->
+    <section class="materials-section" aria-label="รายการสื่อการสอน">
+      <div class="materials-grid" id="materialsGrid"></div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state hidden">
+        <img src="assets/hero-mascot.jpg" alt="ไม่พบสื่อ" class="empty-img">
+        <h3>ไม่พบสื่อการสอนที่ตรงกับเงื่อนไข</h3>
+        <p>ลองเปลี่ยนคำค้นหา เลือกหน่วยการเรียนรู้อื่น หรือกดปุ่มด้านล่างเพื่อดูสื่อทั้งหมดนะครับ</p>
+        <button type="button" id="resetFiltersBtn" class="btn btn-primary">แสดงสื่อทั้งหมด</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>🦉 Krusah English P.6 Hub</strong> — คลังสื่อการสอนภาษาอังกฤษ ป.6 โดยครูสา (Krusah)
+      </div>
+      <div class="footer-note">
+        ใช้งานได้ทันทีทั้งออฟไลน์และออนไลน์ &bull; ข้อมูลที่ครูเพิ่มบันทึกอัตโนมัติในเบราว์เซอร์เครื่องนี้
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. Material Viewer Modal -->
+  <div id="viewerModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+    <div class="modal-dialog modal-xl" id="viewerDialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span id="viewerTypeBadge" class="type-badge"></span>
+          <span id="viewerUnitBadge" class="unit-pill-sm"></span>
+          <h2 id="viewerTitle" class="modal-title"></h2>
+        </div>
+        <div class="modal-header-actions">
+          <button type="button" id="viewerFullscreenBtn" class="icon-btn" title="ขยายเต็มจอ (สำหรับขึ้นจอห้องเรียน)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button type="button" class="icon-btn close-modal-btn" data-close="viewerModal" aria-label="ปิดหน้าต่าง">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+              <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" id="viewerBody"></div>
+    </div>
+  </div>
+
+  <!-- 2. Teacher Add/Edit Material Modal -->
+  <div id="editorModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editorModalTitle">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h2 id="editorModalTitle" class="modal-title">✨ เพิ่มสื่อการสอนใหม่</h2>
+        <button type="button" class="icon-btn close-modal-btn" data-close="editorModal" aria-label="ปิดหน้าต่าง">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+            <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form id="materialForm" class="modal-body editor-form">
+        <input type="hidden" id="editMaterialId">
+
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="matType">ประเภทสื่อการสอน *</label>
+            <select id="matType" required>
+              <option value="worksheet">📝 ใบงาน / แบบฝึกหัด (Worksheet)</option>
+              <option value="media">🎬 วิดีโอ / สไลด์การสอน (Video &amp; Slides)</option>
+              <option value="flashcard">🃏 บัตรคำศัพท์ &amp; เกมจับคู่ (Flashcards)</option>
+              <option value="quiz">🎯 แบบทดสอบออนไลน์ (Quiz)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="matUnit">หน่วยการเรียนรู้ *</label>
+            <select id="matUnit" required></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="matTitle">ชื่อสื่อการสอน *</label>
+          <input type="text" id="matTitle" required placeholder="เช่น ใบงาน Present Simple Tense ชุดที่ 2">
+        </div>
+
+        <div class="form-group">
+          <label for="matDesc">คำอธิบายสั้นๆ *</label>
+          <textarea id="matDesc" rows="2" required placeholder="อธิบายเนื้อหา จุดประสงค์ หรือวิธีใช้งานสื่อนี้..."></textarea>
+        </div>
+
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="matDuration">เวลาที่ใช้ / จำนวนข้อ</label>
+            <input type="text" id="matDuration" placeholder="เช่น 15 นาที หรือ 10 ข้อ">
+          </div>
+          <div class="form-group">
+            <label for="matTags">คำค้นหา / แท็ก (คั่นด้วยเครื่องหมายจุลภาค ,)</label>
+            <input type="text" id="matTags" placeholder="เช่น grammar, tense, o-net">
+          </div>
+        </div>
+
+        <!-- A. Worksheet Fields -->
+        <div id="fieldsWorksheet" class="dynamic-section">
+          <div class="section-box-title">📝 เนื้อหาหรือไฟล์ใบงาน</div>
+          <div class="form-group">
+            <label for="wsFileInput">แนบไฟล์ใบงานจากเครื่อง (PDF / รูปภาพ PNG, JPG — บันทึกในเบราว์เซอร์ได้ทันที)</label>
+            <div class="file-dropzone" id="wsDropzone">
+              <input type="file" id="wsFileInput" accept=".pdf,image/*,.doc,.docx">
+              <div class="file-dropzone-text" id="wsFileStatus">คลิกเพื่อเลือกไฟล์ หรือวางไฟล์ที่นี่ (รองรับ PDF, รูปภาพ)</div>
+            </div>
+            <button type="button" id="wsRemoveFileBtn" class="btn-link-danger hidden">ลบไฟล์ที่แนบไว้</button>
+          </div>
+          <div class="form-group">
+            <label for="wsExternalUrl">หรือวางลิงก์ใบงานออนไลน์ (Google Drive, Canva, Liveworksheets หรือ path ในโฟลเดอร์ materials/...)</label>
+            <input type="text" id="wsExternalUrl" placeholder="https://drive.google.com/... หรือ materials/unit1.pdf">
+          </div>
+          <div class="form-group">
+            <label for="wsInstructions">คำชี้แจงใบงาน (สำหรับพิมพ์ใบงานในตัวแอป)</label>
+            <input type="text" id="wsInstructions" placeholder="เช่น Fill in the blanks with the correct form of the verb.">
+          </div>
+          <div class="form-group">
+            <label for="wsItemsText">รายการโจทย์แบบฝึกหัด (1 บรรทัด = 1 ข้อ | ใช้เครื่องหมาย | คั่นเฉลย เช่น <code>She ___ (go) to school. | goes</code>)</label>
+            <textarea id="wsItemsText" rows="5" placeholder="1. She ___ (go) to school every day. | goes&#10;2. They ___ (play) football after school. | play"></textarea>
+          </div>
+        </div>
+
+        <!-- B. Media (Video / Slide) Fields -->
+        <div id="fieldsMedia" class="dynamic-section hidden">
+          <div class="section-box-title">🎬 ลิงก์วิดีโอ / สไลด์ หรือสร้างสไลด์สอนในตัว</div>
+          <div class="form-group">
+            <label for="mediaUrl">ลิงก์ YouTube / Canva / Google Slides / เว็บไซต์สื่อ</label>
+            <input type="text" id="mediaUrl" placeholder="เช่น https://www.youtube.com/watch?v=... หรือลิงก์ Canva/Google Slides">
+            <small class="form-help">หากใส่ลิงก์ YouTube แอปจะฝังตัวเล่นวิดีโอให้เปิดดูในหน้านี้ได้ทันที</small>
+          </div>
+          <div class="form-group">
+            <label for="mediaSlidesText">หรือสร้างสไลด์สอนในตัวแอป (คั่นแต่ละสไลด์ด้วยบรรทัดที่มี <code>---</code>)</label>
+            <textarea id="mediaSlidesText" rows="6" placeholder="หัวข้อสไลด์ที่ 1&#10;เนื้อหาสรุปหรือตัวอย่างประโยค...&#10;---&#10;หัวข้อสไลด์ที่ 2&#10;เนื้อหาสไลด์ถัดไป..."></textarea>
+          </div>
+        </div>
+
+        <!-- C. Flashcard Fields -->
+        <div id="fieldsFlashcard" class="dynamic-section hidden">
+          <div class="section-box-title">🃏 รายการบัตรคำศัพท์ (รองรับเสียงอ่านภาษาอังกฤษอัตโนมัติ)</div>
+          <p class="form-help-box">พิมพ์ 1 บรรทัดต่อ 1 คำ คั่นด้วย <code>|</code> ตามรูปแบบ:<br>
+            <strong>คำศัพท์ภาษาอังกฤษ | คำอ่าน/ชนิดคำ | ความหมายภาษาไทย | ประโยคตัวอย่าง | อีโมจิ (ไม่บังคับ)</strong>
+          </p>
+          <div class="form-group">
+            <label for="fcCardsText">รายการคำศัพท์ *</label>
+            <textarea id="fcCardsText" rows="7" placeholder="always | (adv.) ออล-เวย์ส | สม่ำเสมอ / เสมอ | I always brush my teeth in the morning. | 🕒&#10;usually | (adv.) ยู-ชวล-ลี | โดยปกติ | She usually walks to school. | 🚶"></textarea>
+          </div>
+        </div>
+
+        <!-- D. Quiz Fields -->
+        <div id="fieldsQuiz" class="dynamic-section hidden">
+          <div class="section-box-title">🎯 สร้างข้อสอบออนไลน์</div>
+          <div id="quizBuilderList" class="quiz-builder-list"></div>
+          <button type="button" id="addQuizQuestionBtn" class="btn btn-soft btn-sm">
+            ➕ เพิ่มข้อคำถาม
+          </button>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-soft close-modal-btn" data-close="editorModal">ยกเลิก</button>
+          <button type="submit" class="btn btn-mint">💾 บันทึกสื่อการสอน</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Manage Units Modal -->
+  <div id="unitsModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="unitsModalTitle">
+    <div class="modal-dialog modal-md">
+      <div class="modal-header">
+        <h2 id="unitsModalTitle" class="modal-title">📚 จัดการหน่วยการเรียนรู้</h2>
+        <button type="button" class="icon-btn close-modal-btn" data-close="unitsModal" aria-label="ปิดหน้าต่าง">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+            <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="unitsManageList" class="units-manage-list"></div>
+        <hr class="divider">
+        <form id="addUnitForm" class="add-unit-form">
+          <h3>✨ เพิ่มหน่วยการเรียนรู้ใหม่</h3>
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="newUnitCode">รหัสหน่วย (เช่น Unit 7)</label>
+              <input type="text" id="newUnitCode" required placeholder="Unit 7">
+            </div>
+            <div class="form-group">
+              <label for="newUnitEmoji">อีโมจิประจำหน่วย</label>
+              <input type="text" id="newUnitEmoji" value="🌈" maxlength="4">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="newUnitTitle">ชื่อหน่วยภาษาอังกฤษ</label>
+            <input type="text" id="newUnitTitle" required placeholder="เช่น Festivals & Celebrations">
+          </div>
+          <div class="form-group">
+            <label for="newUnitThai">ชื่อหน่วยภาษาไทย</label>
+            <input type="text" id="newUnitThai" required placeholder="เช่น เทศกาลและวันสำคัญ">
+          </div>
+          <button type="submit" class="btn btn-mint">➕ เพิ่มหน่วยการเรียนรู้</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Teacher Settings / PIN Modal -->
+  <div id="settingsModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h2 id="settingsModalTitle" class="modal-title">⚙️ ตั้งค่าโหมดครูและข้อมูล</h2>
+        <button type="button" class="icon-btn close-modal-btn" data-close="settingsModal" aria-label="ปิดหน้าต่าง">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+            <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body settings-body">
+        <div class="setting-card">
+          <h3>🔒 รหัสผ่านเปิดโหมดครู (ไม่บังคับ)</h3>
+          <p class="form-help">ตั้งรหัส PIN 4 หลักเพื่อป้องกันนักเรียนกดแก้ไขสื่อโดยไม่ตั้งใจ (ปล่อยว่างหากไม่ต้องการล็อก)</p>
+          <div class="pin-row">
+            <input type="password" id="teacherPinInput" maxlength="8" placeholder="ปล่อยว่าง = ไม่ล็อก">
+            <button type="button" id="savePinBtn" class="btn btn-primary btn-sm">บันทึก PIN</button>
+          </div>
+        </div>
+
+        <div class="setting-card">
+          <h3>📦 ส่งออกเป็นไฟล์ data.js สำหรับอัปขึ้นเว็บ</h3>
+          <p class="form-help">หากต้องการนำสื่อที่ครูเพิ่มทั้งหมดไปฝากบนเว็บฟรี (เช่น GitHub Pages / Netlify) ให้ดาวน์โหลดไฟล์ <code>data.js</code> ใหม่ไปวางทับไฟล์เดิมได้เลย</p>
+          <button type="button" id="exportJsBtn" class="btn btn-soft btn-sm">ดาวน์โหลด data.js เวอร์ชันปัจจุบัน</button>
+        </div>
+
+        <div class="setting-card danger-card">
+          <h3>⚠️ รีเซ็ตข้อมูลทั้งหมด</h3>
+          <p class="form-help">ล้างการแก้ไขทั้งหมดและกลับไปใช้สื่อการสอนเริ่มต้นของระบบ</p>
+          <button type="button" id="resetDefaultDataBtn" class="btn btn-danger btn-sm">รีเซ็ตเป็นค่าเริ่มต้น</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. PIN Prompt Modal -->
+  <div id="pinPromptModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pinPromptTitle">
+    <div class="modal-dialog modal-xs">
+      <div class="modal-header">
+        <h2 id="pinPromptTitle" class="modal-title">🔒 ใส่รหัสผ่านโหมดครู</h2>
+        <button type="button" class="icon-btn close-modal-btn" data-close="pinPromptModal" aria-label="ปิด">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+            <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form id="pinPromptForm" class="modal-body">
+        <div class="form-group">
+          <label for="pinUnlockInput">กรุณากรอกรหัส PIN</label>
+          <input type="password" id="pinUnlockInput" autocomplete="off" required placeholder="****">
+          <small id="pinErrorMsg" class="error-text hidden">รหัส PIN ไม่ถูกต้อง กรุณาลองใหม่</small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">เข้าสู่โหมดครู</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. Interactive Sentence Reader Modal (Krusah Read-Along Studio) -->
+  <div id="readerModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="readerModalTitle">
+    <div class="modal-dialog modal-xl" id="readerDialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="type-badge type-worksheet">🗣️ Interactive Read-Along</span>
+          <h2 id="readerModalTitle" class="modal-title">ฝึกอ่านออกเสียงประโยคภาษาอังกฤษ (ขยายคำทีละคำ)</h2>
+        </div>
+        <div class="modal-header-actions">
+          <button type="button" id="readerFullscreenBtn" class="icon-btn" title="ขยายเต็มจอ (สำหรับขึ้นจอห้องเรียน)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button type="button" class="icon-btn close-modal-btn" data-close="readerModal" aria-label="ปิดหน้าต่าง">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+              <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body reader-body">
+        <!-- Giant Colorful Interactive Stage -->
+        <div class="reader-stage" id="readerStage">
+          <div class="reader-stage-top">
+            <span class="reader-unit-tag" id="readerUnitTag">✨ Unit 1 • Daily Routines</span>
+            <div class="reader-stage-toggles">
+              <button type="button" id="readerToggleThaiBtn" class="btn btn-soft btn-sm">🇹🇭 แสดงคำแปล</button>
+              <button type="button" id="readerLoopBtn" class="btn btn-soft btn-sm" aria-pressed="false">🔁 อ่านวนซ้ำ: ปิด</button>
+            </div>
+          </div>
+
+          <div class="reader-words-wrap" id="readerWordsWrap" aria-live="polite"></div>
+
+          <div class="reader-thai-bar" id="readerThaiBar"></div>
+
+          <div class="reader-progress-wrap">
+            <div class="reader-progress-track">
+              <div class="reader-progress-fill" id="readerProgressFill" style="width:0%;"></div>
+            </div>
+            <span class="reader-word-counter" id="readerWordCounter">พร้อมอ่าน (กด ▶️ หรือคลิกคำใดก็ได้)</span>
+          </div>
+        </div>
+
+        <!-- Primary Playback & Speed Controls -->
+        <div class="reader-controls-bar">
+          <div class="reader-play-group">
+            <button type="button" id="readerPlayBtn" class="btn btn-sunny">▶️ เริ่มอ่านทีละคำ</button>
+            <button type="button" id="readerSmoothBtn" class="btn btn-pink">🎵 อ่านต่อเนื่องทั้งประโยค</button>
+            <button type="button" id="readerStopBtn" class="btn btn-soft btn-sm">⏹️ หยุด</button>
+            <button type="button" id="readerPrevWordBtn" class="btn btn-soft btn-sm" title="คำก่อนหน้า (ลูกศรซ้าย)">⬅️ คำก่อนหน้า</button>
+            <button type="button" id="readerNextWordBtn" class="btn btn-primary btn-sm" title="คำถัดไป (ลูกศรขวา)">คำถัดไป ➡️</button>
+          </div>
+
+          <div class="reader-speed-group" role="group" aria-label="ปรับความเร็วในการอ่าน">
+            <span class="reader-speed-label">ความเร็ว:</span>
+            <button type="button" class="speed-pill" data-speed="slow">🐢 ช้ามาก</button>
+            <button type="button" class="speed-pill active" data-speed="medium">🚶 ปานกลาง</button>
+            <button type="button" class="speed-pill" data-speed="normal">🐇 ปกติ</button>
+          </div>
+        </div>
+
+        <!-- Custom Sentence Composer & Preset Bank -->
+        <div class="reader-bottom-grid">
+          <!-- Custom Sentence Input -->
+          <div class="reader-panel">
+            <h3 class="reader-panel-title">✍️ กำหนดประโยคภาษาอังกฤษเอง</h3>
+            <div class="form-group" style="margin-bottom:8px;">
+              <input type="text" id="readerCustomEn" placeholder="พิมพ์ประโยคภาษาอังกฤษ เช่น I always brush my teeth every morning.">
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <input type="text" id="readerCustomTh" placeholder="คำแปลภาษาไทย (ไม่บังคับ) เช่น ฉันแปรงฟันทุกเช้าเสมอ">
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button type="button" id="readerUseCustomBtn" class="btn btn-primary btn-sm">✨ แสดงประโยคนี้ทันที</button>
+              <button type="button" id="readerSaveCustomBtn" class="btn btn-mint btn-sm">💾 บันทึกเข้าคลังประโยค</button>
+            </div>
+          </div>
+
+          <!-- Preset Grade 6 Sentences Picker -->
+          <div class="reader-panel">
+            <div class="reader-panel-head">
+              <h3 class="reader-panel-title">📚 เลือกประโยคฝึกอ่าน ป.6</h3>
+              <select id="readerUnitFilter" class="reader-unit-select" aria-label="กรองประโยคตามหน่วยการเรียนรู้">
+                <option value="all">ทุกหน่วย (Unit 1–6)</option>
+                <option value="Unit 1">Unit 1: Daily Routines</option>
+                <option value="Unit 2">Unit 2: Healthy Food</option>
+                <option value="Unit 3">Unit 3: Around Town</option>
+                <option value="Unit 4">Unit 4: Travel &amp; Holidays</option>
+                <option value="Unit 5">Unit 5: Dream Jobs</option>
+                <option value="Unit 6">Unit 6: Save Our Earth</option>
+                <option value="Custom">✨ ประโยคที่ครูสาเพิ่มเอง</option>
+              </select>
+            </div>
+            <div class="reader-preset-list" id="readerPresetList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Reading Comprehension Modal (Short Stories + 5 Questions x 4 Choices) -->
+  <div id="readingModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="readingModalTitle">
+    <div class="modal-dialog modal-xl" id="readingDialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="type-badge type-media">📖 Reading Comprehension</span>
+          <h2 id="readingModalTitle" class="modal-title">การอ่านจับใจความภาษาอังกฤษ ป.6 (เนื้อเรื่องสั้น + 5 คำถาม)</h2>
+        </div>
+        <div class="modal-header-actions">
+          <button type="button" id="readingPrintBtn" class="btn btn-primary btn-sm" title="พิมพ์เนื้อเรื่องและคำถาม 5 ข้อ (A4)">
+            🖨️ พิมพ์ A4
+          </button>
+          <button type="button" id="readingFullscreenBtn" class="icon-btn" title="ขยายเต็มจอ (สำหรับขึ้นจอห้องเรียน)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button type="button" class="icon-btn close-modal-btn" data-close="readingModal" aria-label="ปิดหน้าต่าง">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+              <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body reading-body">
+        <!-- Story Selector Cards -->
+        <div class="reading-story-tabs" id="readingStoryTabs" aria-label="เลือกเนื้อเรื่องอ่านจับใจความ"></div>
+
+        <!-- 2-Column Interactive Storybook & 5 Questions -->
+        <div class="reading-split" id="readingSplitContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print Area -->
+  <div id="printArea" class="print-area"></div>
+
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
